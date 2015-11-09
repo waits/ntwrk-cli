@@ -3,8 +3,6 @@ package main
 import "fmt"
 import "os"
 
-// import "io/ioutil"
-
 const (
 	RED     = "\x1b[31m"
 	GREEN   = "\x1b[32m"
@@ -24,19 +22,21 @@ func main() {
 	}
 	switch action {
 	case "help":
-		help()
+		ShowHelp()
+	case "info":
+		ShowInfo()
 	case "ip":
-		ip()
+		ShowIp()
 	default:
 		fmt.Printf("Unknown command '%v'.\n", action)
 	}
 }
 
-func printcl(color string, str string, vars ...interface{}) {
+func Printcl(color string, str string, vars ...interface{}) {
 	fmt.Printf(color+str+RESET+"\n", vars...)
 }
 
-func check(e error) {
+func Check(e error) {
 	if e != nil {
 		panic(e)
 	}
