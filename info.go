@@ -20,7 +20,8 @@ func GetInfo() map[string]interface{} {
 
 func ShowInfo() {
 	info := GetInfo()
-	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\n", info["ip"], info["host"])
+	location := fmt.Sprintf("%s, %s", info["city"], info["country"])
+	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\nLocation:\t%s\n", info["ip"], info["host"], location)
 }
 
 func ShowIp() {
