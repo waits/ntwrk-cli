@@ -24,7 +24,7 @@ func main() {
 	case "help":
 		ShowHelp()
 	case "info":
-		ShowInfo()
+		ShowInfo(os.Args[2:])
 	case "ip":
 		ShowIp()
 	default:

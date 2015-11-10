@@ -5,8 +5,8 @@ import "fmt"
 import "io/ioutil"
 import "net/http"
 
-func GetInfo() map[string]interface{} {
-	resp, err := http.Get("https://bandwidth.waits.io/info.json")
+func GetInfo(url string) map[string]interface{} {
+	resp, err := http.Get(url)
 	Check(err)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
@@ -18,13 +18,19 @@ func GetInfo() map[string]interface{} {
 	return data
 }
 
-func ShowInfo() {
-	info := GetInfo()
+func ShowInfo(args []string) {
+	var url string
+	if len(args) > 0 {
+		url = fmt.Sprintf("https://bandwidth.waits.io/info.json?ip=%s", args[0])
+	} else {
+		url = "https://bandwidth.waits.io/info.json"
+	}
+	info := GetInfo(url)
 	location := fmt.Sprintf("%s, %s", info["city"], info["country"])
 	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\nLocation:\t%s\n", info["ip"], info["host"], location)
 }
 
 func ShowIp() {
-	info := GetInfo()
+	info := GetInfo("https://bandwidth.waits.io/info.json")
 	fmt.Printf("%s\n", info["ip"])
 }
