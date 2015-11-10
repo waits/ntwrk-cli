@@ -21,16 +21,21 @@ func GetInfo(url string) map[string]interface{} {
 func ShowInfo(args []string) {
 	var url string
 	if len(args) > 0 {
-		url = fmt.Sprintf("https://bandwidth.waits.io/info.json?ip=%s", args[0])
+		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
 	} else {
-		url = "https://bandwidth.waits.io/info.json"
+		url = "https://ntwrk.waits.io/info.json"
 	}
 	info := GetInfo(url)
-	location := fmt.Sprintf("%s, %s", info["city"], info["country"])
+	var location string
+	if info["city"] != nil {
+		location = fmt.Sprintf("%s, %s", info["city"], info["country"])
+	} else {
+		location = fmt.Sprintf("%s", info["country"])
+	}
 	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\nLocation:\t%s\n", info["ip"], info["host"], location)
 }
 
 func ShowIp() {
-	info := GetInfo("https://bandwidth.waits.io/info.json")
+	info := GetInfo("https://ntwrk.waits.io/info.json")
 	fmt.Printf("%s\n", info["ip"])
 }
