@@ -21,6 +21,8 @@ func main() {
 		action = "help"
 	}
 	switch action {
+	case "geo":
+		ShowGeo(os.Args[2:])
 	case "help":
 		ShowHelp()
 	case "info":

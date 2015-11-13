@@ -18,6 +18,28 @@ func GetInfo(url string) map[string]interface{} {
 	return data
 }
 
+func ShowGeo(args []string) {
+	var url string
+	if len(args) > 0 {
+		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
+	} else {
+		url = "https://ntwrk.waits.io/info.json"
+	}
+	info := GetInfo(url)
+	fmt.Printf("GeoIP data for %s\n\n", info["ip"])
+	if info["city"] != nil && info["region"] != nil {
+		fmt.Printf("Location:\t%s, %s, %s\n", info["city"], info["region"], info["country"])
+	} else {
+		fmt.Printf("Location:\t%s\n", info["country"])
+	}
+	if info["latitude"] != nil && info["longitude"] != nil {
+		fmt.Printf("Coordinates:\t%f, %f\n", info["latitude"], info["longitude"])
+	}
+	if info["time_zone"] != nil {
+		fmt.Printf("Time zone:\t%s\n", info["time_zone"])
+	}
+}
+
 func ShowInfo(args []string) {
 	var url string
 	if len(args) > 0 {
@@ -26,19 +48,7 @@ func ShowInfo(args []string) {
 		url = "https://ntwrk.waits.io/info.json"
 	}
 	info := GetInfo(url)
-	var location string
-	if info["city"] != nil && info["region"] != nil {
-		location = fmt.Sprintf("%s, %s, %s", info["city"], info["region"], info["country"])
-	} else {
-		location = fmt.Sprintf("%s", info["country"])
-	}
-	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\nLocation:\t%s\n", info["ip"], info["host"], location)
-	if info["latitude"] != nil && info["longitude"] != nil {
-		fmt.Printf("Coordinates:\t%f, %f\n", info["latitude"], info["longitude"])
-	}
-	if info["time_zone"] != nil {
-		fmt.Printf("Time zone:\t%s\n", info["time_zone"])
-	}
+	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\n", info["ip"], info["host"])
 }
 
 func ShowIp() {
