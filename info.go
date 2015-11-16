@@ -5,7 +5,7 @@ import "fmt"
 import "io/ioutil"
 import "net/http"
 
-func GetInfo(url string) map[string]interface{} {
+func fetchInfo(url string) map[string]interface{} {
 	resp, err := http.Get(url)
 	check(err)
 	defer resp.Body.Close()
@@ -25,7 +25,7 @@ func geo(args []string) {
 	} else {
 		url = "https://ntwrk.waits.io/info.json"
 	}
-	info := GetInfo(url)
+	info := fetchInfo(url)
 	fmt.Printf("GeoIP data for %s\n\n", info["ip"])
 	if info["city"] != nil && info["region"] != nil {
 		fmt.Printf("Location:\t%s, %s, %s\n", info["city"], info["region"], info["country"])
@@ -47,11 +47,11 @@ func info(args []string) {
 	} else {
 		url = "https://ntwrk.waits.io/info.json"
 	}
-	info := GetInfo(url)
+	info := fetchInfo(url)
 	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\n", info["ip"], info["host"])
 }
 
 func ip() {
-	info := GetInfo("https://ntwrk.waits.io/info.json")
+	info := fetchInfo("https://ntwrk.waits.io/info.json")
 	fmt.Printf("%s\n", info["ip"])
 }
