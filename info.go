@@ -7,18 +7,18 @@ import "net/http"
 
 func GetInfo(url string) map[string]interface{} {
 	resp, err := http.Get(url)
-	Check(err)
+	check(err)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 
 	var data map[string]interface{}
 	var jErr = json.Unmarshal(body, &data)
-	Check(jErr)
+	check(jErr)
 
 	return data
 }
 
-func ShowGeo(args []string) {
+func geo(args []string) {
 	var url string
 	if len(args) > 0 {
 		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
@@ -40,7 +40,7 @@ func ShowGeo(args []string) {
 	}
 }
 
-func ShowInfo(args []string) {
+func info(args []string) {
 	var url string
 	if len(args) > 0 {
 		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
@@ -51,7 +51,7 @@ func ShowInfo(args []string) {
 	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\n", info["ip"], info["host"])
 }
 
-func ShowIp() {
+func ip() {
 	info := GetInfo("https://ntwrk.waits.io/info.json")
 	fmt.Printf("%s\n", info["ip"])
 }

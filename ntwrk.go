@@ -22,23 +22,25 @@ func main() {
 	}
 	switch action {
 	case "geo":
-		ShowGeo(os.Args[2:])
+		geo(os.Args[2:])
 	case "help":
-		ShowHelp()
+		help()
 	case "info":
-		ShowInfo(os.Args[2:])
+		info(os.Args[2:])
 	case "ip":
-		ShowIp()
+		ip()
+	case "test":
+		test()
 	default:
 		fmt.Printf("Unknown command '%v'.\n", action)
 	}
 }
 
-func Printcl(color string, str string, vars ...interface{}) {
+func printcl(color string, str string, vars ...interface{}) {
 	fmt.Printf(color+str+RESET+"\n", vars...)
 }
 
-func Check(e error) {
+func check(e error) {
 	if e != nil {
 		panic(e)
 	}
