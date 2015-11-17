@@ -8,7 +8,7 @@ import "net/http"
 import "strings"
 import "time"
 
-const downloadUrl = "http://cdn.ntwrk.waits.io/128m"
+const downloadUrl = "https://ntwrk.waits.io/128m"
 const uploadUrl = "https://ntwrk.waits.io/upload"
 
 type ProgressReader struct {
