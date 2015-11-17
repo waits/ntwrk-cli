@@ -11,7 +11,7 @@ func help() {
 		"Show this help message",
 		"Show basic info about an IP",
 		"\tShow external IPv4 address",
-		"Run download test"}
+		"Run bandwidth tests"}
 	for i, cmd := range commands {
 		fmt.Printf("    %v\t%v\n", cmd, descriptions[i])
 	}

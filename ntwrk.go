@@ -30,7 +30,7 @@ func main() {
 	case "ip":
 		ip()
 	case "test":
-		test()
+		runTests()
 	default:
 		fmt.Printf("Unknown command '%v'.\n", action)
 	}
