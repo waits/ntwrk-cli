@@ -8,13 +8,13 @@ import "net/http"
 import "strings"
 import "time"
 
-const downloadUrl = "https://ntwrk.waits.io/128m"
-const uploadUrl = "https://ntwrk.waits.io/upload"
+const downloadUrl = "http://ntwrk.waits.io/data/128mb"
+const uploadUrl = "http://ntwrk.waits.io/upload"
 
 type ProgressReader struct {
 	io.Reader
 	Reporter func(r int64) bool
-	Final bool
+	Final    bool
 }
 
 func (pr *ProgressReader) Read(p []byte) (n int, err error) {
@@ -51,7 +51,7 @@ func download() float64 {
 		total += n
 		elapsed = time.Since(start).Seconds()
 		progress := int8(elapsed / 8 * 100)
-		bandwidth = float64(total) / elapsed / 131072
+		bandwidth = float64(total) / elapsed / 128000
 		fmt.Printf("\r%3d%% @ %5.2f Mbps", progress, bandwidth)
 	}
 
@@ -60,15 +60,15 @@ func download() float64 {
 
 func upload() float64 {
 	fmt.Println("\nTesting upload speed...")
-	buf := bytes.NewBufferString(strings.Repeat("0123456789012345", 1048576))
+	buf := bytes.NewBufferString(strings.Repeat("0123456789012345", 1000000))
 	total := int64(0)
 	start := time.Now()
 	var bandwidth float64
 	pr := &ProgressReader{buf, func(r int64) bool {
 		elapsed := time.Since(start).Seconds()
 		total += r
-		bandwidth =  float64(total) / elapsed / 131072
-		fmt.Printf("\r%3d%% @ %5.2f Mbps", int8(elapsed / 8 * 100), bandwidth)
+		bandwidth = float64(total) / elapsed / 128000
+		fmt.Printf("\r%3d%% @ %5.2f Mbps", int8(elapsed/8*100), bandwidth)
 		if elapsed >= 8 {
 			return true
 		} else {
