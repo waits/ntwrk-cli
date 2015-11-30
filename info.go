@@ -5,6 +5,8 @@ import "fmt"
 import "io/ioutil"
 import "net/http"
 
+const infoUrl = "https://ntwrk.waits.io/info.json"
+
 func fetchInfo(url string) map[string]interface{} {
 	resp, err := http.Get(url)
 	check(err)
@@ -21,9 +23,9 @@ func fetchInfo(url string) map[string]interface{} {
 func geo(args []string) {
 	var url string
 	if len(args) > 0 {
-		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
+		url = fmt.Sprintf("%s?ip=%s", infoUrl, args[0])
 	} else {
-		url = "https://ntwrk.waits.io/info.json"
+		url = infoUrl
 	}
 	info := fetchInfo(url)
 	fmt.Printf("GeoIP data for %s\n\n", info["ip"])
@@ -43,15 +45,15 @@ func geo(args []string) {
 func info(args []string) {
 	var url string
 	if len(args) > 0 {
-		url = fmt.Sprintf("https://ntwrk.waits.io/info.json?ip=%s", args[0])
+		url = fmt.Sprintf("%s?ip=%s", infoUrl, args[0])
 	} else {
-		url = "https://ntwrk.waits.io/info.json"
+		url = infoUrl
 	}
 	info := fetchInfo(url)
 	fmt.Printf("IPv4 address:\t%s\nHostname:\t%s\n", info["ip"], info["host"])
 }
 
 func ip() {
-	info := fetchInfo("https://ntwrk.waits.io/info.json")
-	fmt.Printf("%s\n", info["ip"])
+	resp := fetchInfo("https://ntwrk.waits.io/ip.json")
+	fmt.Printf("%s\n", resp["ip"])
 }
