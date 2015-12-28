@@ -29,6 +29,9 @@ func geo(args []string) {
 	}
 	info := fetchInfo(url)
 	fmt.Printf("GeoIP data for %s\n\n", info["ip"])
+	if info["isp"] != nil {
+		fmt.Printf("ISP:\t\t%s\n", info["isp"])
+	}
 	if info["city"] != nil && info["region"] != nil {
 		fmt.Printf("Location:\t%s, %s, %s\n", info["city"], info["region"], info["country"])
 	} else {
