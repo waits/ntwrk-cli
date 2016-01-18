@@ -11,6 +11,8 @@ const (
 	MAGENTA = "\x1b[35m"
 	CYAN    = "\x1b[36m"
 	RESET   = "\x1b[0m"
+	HIDE    = "\x1b[?25l"
+	SHOW    = "\x1b[?25h"
 )
 
 func main() {

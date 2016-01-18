@@ -28,9 +28,16 @@ func (pr *ProgressReader) Read(p []byte) (n int, err error) {
 }
 
 func runTests() {
+	fmt.Print(HIDE)
 	db, ub := download(), upload()
+	fmt.Print(SHOW)
 	fmt.Printf("\n\nYour download speed is %.2f Mbps.\n", db)
 	fmt.Printf("Your upload speed is %.2f Mbps.\n", ub)
+}
+
+func printProgress(progress int8, bandwidth float64) {
+	fmt.Print("                        ")
+	fmt.Printf("\r%3d%% @ %5.2f Mbps", progress, bandwidth)
 }
 
 func download() float64 {
@@ -52,7 +59,7 @@ func download() float64 {
 		elapsed = time.Since(start).Seconds()
 		progress := int8(elapsed / 8 * 100)
 		bandwidth = float64(total) / elapsed / 128000
-		fmt.Printf("\r%3d%% @ %5.2f Mbps", progress, bandwidth)
+		printProgress(progress, bandwidth)
 	}
 
 	return bandwidth
@@ -68,7 +75,7 @@ func upload() float64 {
 		elapsed := time.Since(start).Seconds()
 		total += r
 		bandwidth = float64(total) / elapsed / 128000
-		fmt.Printf("\r%3d%% @ %5.2f Mbps", int8(elapsed/8*100), bandwidth)
+		printProgress(int8(elapsed/8*100), bandwidth)
 		if elapsed >= 8 {
 			return true
 		} else {
